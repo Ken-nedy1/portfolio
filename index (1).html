@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Kanu Kennedy — QA Automation Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --card: #181818;
+      --border: #2a2a2a;
+      --accent: #c8f135;
+      --accent2: #f1c835;
+      --text: #e8e8e8;
+      --muted: #888;
+      --dim: #555;
+      --red: #ff4d4d;
+      --teal: #35f1d4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Lora', serif;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* Custom Cursor */
+    .cursor {
+      position: fixed;
+      width: 12px; height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease, background 0.2s;
+      mix-blend-mode: difference;
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.35s ease, border-color 0.2s;
+      mix-blend-mode: difference;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      background: rgba(13,13,13,0.72);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      transition: color 0.25s;
+      text-transform: uppercase;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    .nav-cta {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.55rem 1.4rem;
+      border: none;
+      cursor: none;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .nav-cta:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    /* Hero */
+    #hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(200,241,53,0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,241,53,0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-glow {
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,241,53,0.08) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--accent);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s forwards;
+    }
+
+    .hero-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(3.5rem, 8vw, 7.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.4s forwards;
+    }
+
+    .hero-name span { color: var(--accent); }
+
+    .hero-subtitle {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      color: var(--muted);
+      margin-top: 1.6rem;
+      max-width: 560px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.6s forwards;
+    }
+
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 2.2rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.8s forwards;
+    }
+
+    .tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      padding: 0.35rem 0.9rem;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tag:hover { border-color: var(--accent); color: var(--accent); }
+    .tag.active { border-color: var(--accent); color: var(--accent); }
+
+    .hero-cta-row {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2.8rem;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+
+    .btn-primary {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.9rem 2.2rem;
+      border: none;
+      cursor: none;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--accent2); transform: translateY(-3px); }
+
+    .btn-outline {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+      background: transparent;
+      padding: 0.9rem 2.2rem;
+      border: 1px solid var(--border);
+      cursor: none;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s, transform 0.2s;
+      display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      animation: fadeIn 1s 1.4s forwards;
+    }
+
+    .hero-scroll span {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px; height: 50px;
+      background: linear-gradient(var(--accent), transparent);
+      animation: scrollPulse 2s infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(0.6); }
+    }
+
+    /* Section base */
+    section {
+      padding: 7rem 4rem;
+      position: relative;
+    }
+
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+
+    .section-divider {
+      width: 60px; height: 2px;
+      background: var(--accent);
+      margin-bottom: 3rem;
+    }
+
+    /* About */
+    #about {
+      background: var(--bg2);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 1.05rem;
+      line-height: 1.9;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .about-text p strong { color: var(--text); font-style: italic; }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .stat-box {
+      border: 1px solid var(--border);
+      padding: 1.5rem;
+      background: var(--bg3);
+      transition: border-color 0.2s;
+    }
+    .stat-box:hover { border-color: var(--accent); }
+
+    .stat-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-top: 0.4rem;
+    }
+
+    .about-right-card {
+      border: 1px solid var(--border);
+      padding: 2.5rem;
+      background: var(--card);
+      position: relative;
+    }
+
+    .about-right-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 4px; height: 100%;
+      background: linear-gradient(var(--accent), var(--teal));
+    }
+
+    .card-heading {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+    }
+
+    .about-list {
+      list-style: none;
+    }
+    .about-list li {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      padding: 0.7rem 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      letter-spacing: 0.04em;
+    }
+    .about-list li:last-child { border-bottom: none; }
+    .about-list li::before {
+      content: '▸';
+      color: var(--accent);
+      font-size: 0.7rem;
+    }
+
+    /* Why QA Matters */
+    #why-qa {
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .why-qa-intro {
+      max-width: 700px;
+      font-size: 1.1rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 4rem;
+    }
+
+    .qa-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .qa-card {
+      background: var(--bg2);
+      padding: 2.5rem 2rem;
+      transition: background 0.25s;
+      position: relative;
+    }
+    .qa-card:hover { background: var(--bg3); }
+
+    .qa-icon {
+      font-size: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .qa-card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .qa-card-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .qa-stat {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 2rem;
+      color: var(--accent);
+      margin-top: 1.2rem;
+    }
+
+    .qa-stat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* Skills */
+    #skills {
+      background: var(--bg2);
+    }
+
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+    }
+
+    .skill-category {
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 2rem;
+      transition: border-color 0.2s;
+    }
+    .skill-category:hover { border-color: var(--accent); }
+
+    .skill-cat-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+    }
+
+    .skill-cat-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .skill-bar-row {
+      margin-bottom: 1rem;
+    }
+
+    .skill-bar-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.4rem;
+    }
+
+    .skill-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--text);
+    }
+
+    .skill-pct {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .skill-bar-bg {
+      width: 100%;
+      height: 3px;
+      background: var(--border);
+      position: relative;
+    }
+
+    .skill-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--teal));
+      width: 0%;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .tech-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .tech-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.7rem;
+      letter-spacing: 0.06em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .tech-tag:hover { border-color: var(--teal); color: var(--teal); }
+
+    /* Automation Guide */
+    #automation {
+      background: var(--bg);
+    }
+
+    .automation-intro {
+      max-width: 650px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 4rem;
+    }
+
+    .pipeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .pipeline::before {
+      content: '';
+      position: absolute;
+      left: 28px; top: 0; bottom: 0;
+      width: 1px;
+      background: linear-gradient(var(--accent), var(--teal), transparent);
+    }
+
+    .pipe-step {
+      display: flex;
+      gap: 2.5rem;
+      align-items: flex-start;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .pipe-step:last-child { border-bottom: none; }
+
+    .pipe-num {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 0.78rem;
+      color: var(--bg);
+      background: var(--accent);
+      width: 56px; height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: 0.05em;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pipe-content { flex: 1; }
+
+    .pipe-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.15rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .pipe-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .pipe-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .pipe-tool {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--teal);
+      border: 1px solid rgba(53,241,212,0.2);
+      padding: 0.2rem 0.6rem;
+      letter-spacing: 0.08em;
+    }
+
+    /* Code snippet */
+    .code-block {
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-left: 3px solid var(--accent);
+      padding: 1.5rem;
+      margin-top: 1rem;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: #aaa;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .code-block .kw { color: var(--accent); }
+    .code-block .str { color: var(--teal); }
+    .code-block .cmt { color: var(--dim); font-style: italic; }
+    .code-block .fn { color: #f1c835; }
+    .code-block .typ { color: #ff8c69; }
+
+    /* Projects */
+    #projects {
+      background: var(--bg2);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    .project-card {
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 0;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+      cursor: none;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .project-card-header {
+      padding: 1.8rem 2rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .project-num {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.2em;
+    }
+
+    .project-links {
+      display: flex;
+      gap: 0.7rem;
+    }
+
+    .project-link {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.6rem;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+
+    .project-body {
+      padding: 1.8rem 2rem 2rem;
+    }
+
+    .project-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-type {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--accent);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .project-desc {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 1.5rem;
+    }
+
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .stack-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.65rem;
+      padding: 0.25rem 0.6rem;
+      border: 1px solid var(--border);
+      color: var(--dim);
+      letter-spacing: 0.06em;
+    }
+
+    /* Contact */
+    #contact {
+      background: var(--bg);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-glow {
+      position: absolute;
+      bottom: -300px; left: 50%;
+      transform: translateX(-50%);
+      width: 800px; height: 600px;
+      background: radial-gradient(circle, rgba(200,241,53,0.06) 0%, transparent 65%);
+      pointer-events: none;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 5rem;
+      align-items: start;
+    }
+
+    .contact-left p {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      color: var(--muted);
+      line-height: 1.85;
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-info-item {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .contact-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .contact-info-text {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .contact-info-label {
+      font-size: 0.65rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.2rem;
+    }
+
+    .social-row {
+      display: flex;
+      gap: 0.8rem;
+      margin-top: 2.5rem;
+    }
+
+    .social-btn {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .social-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Form */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .form-input, .form-textarea, .form-select {
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      padding: 0.9rem 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+      appearance: none;
+      resize: none;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--accent);
+    }
+    .form-textarea { min-height: 130px; }
+
+    .form-submit {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.82rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 1rem 2.5rem;
+      cursor: none;
+      font-weight: 500;
+      align-self: flex-start;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .form-submit:hover { background: var(--accent2); transform: translateY(-2px); }
+
+    /* Footer */
+    footer {
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--dim);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-copy span { color: var(--accent); }
+
+    .footer-back {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-back:hover { color: var(--accent); }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--border); }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+    /* Mobile */
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 5rem 1.5rem; }
+      #hero { padding: 0 1.5rem; }
+      .about-grid, .contact-grid, .projects-grid, .skills-grid, .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* Active nav highlight */
+    nav a.active { color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#hero" class="nav-logo">KK</a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#why-qa">Why QA</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#automation">Automation</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Hire Me</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-grid-bg"></div>
+    <div class="hero-glow"></div>
+
+    <p class="hero-eyebrow">Available for opportunities</p>
+    <h1 class="hero-name">Kanu<br/><span>Kennedy</span></h1>
+    <p class="hero-subtitle">
+      QA Automation Engineer — building reliable software through comprehensive testing. Exploring backend development.
+    </p>
+    <div class="hero-tags">
+      <span class="tag active">Test Automation</span>
+      <span class="tag">Java + Playwright</span>
+      <span class="tag">API Testing</span>
+      <span class="tag">Bug Hunting</span>
+      <span class="tag">Learning Backend</span>
+    </div>
+    <div class="hero-cta-row">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-outline">Get in Touch</a>
+    </div>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="reveal">
+      <p class="section-label">01 — Who I Am</p>
+      <h2 class="section-title">About Me</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          I'm <strong>Kanu Kennedy</strong>, a QA Engineer specializing in building robust,
+          maintainable test frameworks that catch bugs before they reach production. My core strength
+          is in <strong>Java-based test automation</strong> using Playwright and JUnit for both UI and API testing. I sit at the intersection of quality assurance and backend engineering, a combination that gives me a uniquely holistic view of the entire development lifecycle.
+        </p>
+        <p>
+          My journey started with a curiosity about <strong>why software breaks</strong>. That curiosity
+          evolved into a methodology: test early, test often, automate everything possible. I build test
+          suites that integrate seamlessly into CI/CD pipelines, giving teams the confidence to ship faster.
+        </p>
+        <p>
+          I'm also actively <strong>learning backend development</strong> — understanding how to build
+          APIs has made me a better tester. I can think from both sides of the codebase, which helps
+          me write more effective tests and catch issues earlier in the development cycle.
+        </p>
+
+        <div class="about-stats">
+          <div class="stat-box">
+            <div class="stat-num">40+</div>
+            <div class="stat-label">Test Suites Written</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">8+</div>
+            <div class="stat-label">Projects Delivered</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">95%+</div>
+            <div class="stat-label">Bug Detection Rate</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-num">4+</div>
+            <div class="stat-label">Years Experience</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="about-right-card">
+          <p class="card-heading">Core QA Competencies</p>
+          <ul class="about-list">
+            <li>Test Automation Framework Development</li>
+            <li>Java + Playwright + JUnit</li>
+            <li>UI & API Test Automation</li>
+            <li>Manual & Exploratory Testing</li>
+            <li>REST API Testing (Postman)</li>
+            <li>Performance Testing (JMeter)</li>
+            <li>Bug Reporting & Root Cause Analysis</li>
+            <li>Test Data Management</li>
+            <li>Agile / Scrum Workflows</li>
+            <li>NoSQL Database Validation</li>
+          </ul>
+        </div>
+
+        <div class="about-right-card" style="margin-top:1.5rem;">
+          <p class="card-heading">Currently Learning</p>
+          <ul class="about-list">
+            <li>Backend Development (Spring Boot)</li>
+            <li>GraphQL API Testing Strategies</li>
+            <li>Security Testing (OWASP Top 10)</li>
+            <li>Docker & Container Testing</li>
+            <li>CI/CD Integration (GitHub Actions)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY QA MATTERS -->
+  <section id="why-qa">
+    <div class="reveal">
+      <p class="section-label">02 — The Case for Quality</p>
+      <h2 class="section-title">Why QA Matters</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p class="why-qa-intro reveal">
+      Quality Assurance is often seen as a bottleneck. In reality, it's the safety net that lets teams
+      move <em>faster</em> with <em>confidence</em>. Here's why investing in QA is one of the highest-ROI
+      decisions any engineering team can make.
+    </p>
+
+    <div class="qa-cards reveal">
+      <div class="qa-card">
+        <div class="qa-icon">🔍</div>
+        <div class="qa-card-title">Bugs Cost More Later</div>
+        <p class="qa-card-text">
+          A bug found in development costs a fraction of what it costs in production. QA shifts
+          defect discovery left — catching issues before they reach real users and real consequences.
+        </p>
+        <div class="qa-stat">30×</div>
+        <div class="qa-stat-label">Cost to fix in prod vs dev</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-icon">⚡</div>
+        <div class="qa-card-title">Speed Through Confidence</div>
+        <p class="qa-card-text">
+          Automated regression suites give developers the confidence to ship fast. Without tests,
+          every change is a gamble. With them, every deployment is a calculated, evidence-backed decision.
+        </p>
+        <div class="qa-stat">4×</div>
+        <div class="qa-stat-label">Faster release cycles with automation</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-icon">🛡️</div>
+        <div class="qa-card-title">Protects Your Brand</div>
+        <p class="qa-card-text">
+          A single production incident can erode months of user trust. QA is the discipline that
+          ensures your product reflects your brand promise — every build, every release, every time.
+        </p>
+        <div class="qa-stat">88%</div>
+        <div class="qa-stat-label">Of users abandon after poor experience</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-icon">🧠</div>
+        <div class="qa-card-title">QA Improves Code Quality</div>
+        <p class="qa-card-text">
+          Writing testable code forces better architecture. Test-driven practices lead to cleaner
+          interfaces, better separation of concerns, and more maintainable codebases overall.
+        </p>
+        <div class="qa-stat">40%</div>
+        <div class="qa-stat-label">Defect reduction with TDD</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-icon">📊</div>
+        <div class="qa-card-title">Data-Driven Decisions</div>
+        <p class="qa-card-text">
+          QA generates metrics — test coverage, defect density, mean time to failure. These are
+          real engineering signals that inform roadmap prioritization and team allocation.
+        </p>
+        <div class="qa-stat">∞</div>
+        <div class="qa-stat-label">Insight from proper test reporting</div>
+      </div>
+
+      <div class="qa-card">
+        <div class="qa-icon">🤝</div>
+        <div class="qa-card-title">Bridge Between Teams</div>
+        <p class="qa-card-text">
+          QA engineers speak both business and engineering. We translate user requirements into
+          test scenarios and translate defects into developer-friendly reproduction steps.
+        </p>
+        <div class="qa-stat">1</div>
+        <div class="qa-stat-label">Team — Devs, QA & Stakeholders aligned</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="reveal">
+      <p class="section-label">03 — Tech Stack</p>
+      <h2 class="section-title">Skills & Tools</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-category reveal">
+        <p class="skill-cat-label">Core Stack</p>
+        <p class="skill-cat-title">Test Automation</p>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Java</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Playwright (Java)</span><span class="skill-pct">88%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">JUnit</span><span class="skill-pct">82%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="82"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Selenium (Basics)</span><span class="skill-pct">55%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="55"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Cypress (Basics)</span><span class="skill-pct">50%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="50"></div></div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Maven</span>
+          <span class="tech-tag">TestNG</span>
+          <span class="tech-tag">Page Object Model</span>
+          <span class="tech-tag">Data-Driven Testing</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <p class="skill-cat-label">API & Database</p>
+        <p class="skill-cat-title">Backend Testing</p>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Postman / REST API</span><span class="skill-pct">90%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">NoSQL / MongoDB</span><span class="skill-pct">75%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="75"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">JSON Schema Validation</span><span class="skill-pct">70%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="70"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">REST Assured</span><span class="skill-pct">65%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="65"></div></div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">MongoDB Compass</span>
+          <span class="tech-tag">API Mocking</span>
+          <span class="tech-tag">Newman (CLI)</span>
+          <span class="tech-tag">JSON / XML</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <p class="skill-cat-label">CI/CD & DevOps</p>
+        <p class="skill-cat-title">Integration & Deployment</p>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">GitHub Actions</span><span class="skill-pct">80%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="80"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Git / Version Control</span><span class="skill-pct">85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="85"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Docker (Learning)</span><span class="skill-pct">45%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="45"></div></div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">Jenkins (Basics)</span>
+          <span class="tech-tag">JIRA</span>
+          <span class="tech-tag">Confluence</span>
+          <span class="tech-tag">Test Reports</span>
+        </div>
+      </div>
+
+      <div class="skill-category reveal">
+        <p class="skill-cat-label">Learning Path</p>
+        <p class="skill-cat-title">Backend Development</p>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Spring Boot (Learning)</span><span class="skill-pct">35%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="35"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">REST API Design</span><span class="skill-pct">40%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="40"></div></div>
+        </div>
+        <div class="skill-bar-row">
+          <div class="skill-bar-top"><span class="skill-name">Database Design</span><span class="skill-pct">50%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" data-width="50"></div></div>
+        </div>
+        <div class="tech-tags">
+          <span class="tech-tag">JPA / Hibernate</span>
+          <span class="tech-tag">CRUD Operations</span>
+          <span class="tech-tag">Authentication</span>
+          <span class="tech-tag">Microservices</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTOMATION GUIDE -->
+  <section id="automation">
+    <div class="reveal">
+      <p class="section-label">04 — My Methodology</p>
+      <h2 class="section-title">Step-by-Step<br/>Test Automation Guide</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <p class="automation-intro reveal">
+      This is the exact framework I follow when building test automation from scratch for a new project
+      using Java, Playwright, and JUnit. It's battle-tested, scalable, and CI/CD-ready.
+    </p>
+
+    <div class="pipeline">
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">01</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Understand Requirements & Define Test Scope</p>
+          <p class="pipe-desc">
+            Before writing a single line of code, I map the application's features, user flows, and
+            business rules. I identify what's critical to test (happy paths, edge cases, failure modes)
+            and what can be deferred. This step prevents over-engineering and under-coverage.
+          </p>
+          <div class="pipe-tools">
+            <span class="pipe-tool">Confluence</span>
+            <span class="pipe-tool">JIRA</span>
+            <span class="pipe-tool">Test Plans</span>
+            <span class="pipe-tool">Mind Maps</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">02</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Set Up Java Project with Maven</p>
+          <p class="pipe-desc">
+            I create a Maven project and add Playwright and JUnit dependencies. Maven handles all
+            dependency management and makes the project easy to run on any machine or CI/CD pipeline.
+            Project structure follows best practices with clear separation of tests, page objects, and utilities.
+          </p>
+          <div class="code-block">
+<span class="cmt"><!-- pom.xml - Core dependencies --></span>
+<span class="kw">&lt;dependencies&gt;</span>
+  <span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>com.microsoft.playwright<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>playwright<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>1.43.0<span class="kw">&lt;/version&gt;</span>
+  <span class="kw">&lt;/dependency&gt;</span>
+  <span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.junit.jupiter<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>junit-jupiter<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>5.10.0<span class="kw">&lt;/version&gt;</span>
+    <span class="kw">&lt;scope&gt;</span>test<span class="kw">&lt;/scope&gt;</span>
+  <span class="kw">&lt;/dependency&gt;</span>
+  <span class="kw">&lt;dependency&gt;</span>
+    <span class="kw">&lt;groupId&gt;</span>org.json<span class="kw">&lt;/groupId&gt;</span>
+    <span class="kw">&lt;artifactId&gt;</span>json<span class="kw">&lt;/artifactId&gt;</span>
+    <span class="kw">&lt;version&gt;</span>20231013<span class="kw">&lt;/version&gt;</span>
+  <span class="kw">&lt;/dependency&gt;</span>
+<span class="kw">&lt;/dependencies&gt;</span>
+          </div>
+          <div class="pipe-tools" style="margin-top:1rem;">
+            <span class="pipe-tool">Maven</span>
+            <span class="pipe-tool">JDK 11+</span>
+            <span class="pipe-tool">IntelliJ IDEA</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">03</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Implement Page Object Model (POM)</p>
+          <p class="pipe-desc">
+            I follow the Page Object Model pattern to separate test logic from UI selectors. Each
+            page gets its own class with methods representing user actions. This makes tests readable,
+            maintainable, and resilient to UI changes — update one locator, fix all tests.
+          </p>
+          <div class="code-block">
+<span class="cmt">// LoginPage.java - Page Object example</span>
+<span class="kw">public class</span> <span class="typ">LoginPage</span> {
+    <span class="kw">private final</span> <span class="typ">Page</span> page;
+    <span class="kw">private final</span> <span class="typ">Locator</span> emailInput;
+    <span class="kw">private final</span> <span class="typ">Locator</span> passwordInput;
+    <span class="kw">private final</span> <span class="typ">Locator</span> submitButton;
+
+    <span class="kw">public</span> <span class="fn">LoginPage</span>(<span class="typ">Page</span> page) {
+        <span class="kw">this</span>.page = page;
+        <span class="kw">this</span>.emailInput = page.<span class="fn">locator</span>(<span class="str">"#email"</span>);
+        <span class="kw">this</span>.passwordInput = page.<span class="fn">locator</span>(<span class="str">"#password"</span>);
+        <span class="kw">this</span>.submitButton = page.<span class="fn">locator</span>(<span class="str">"button[type='submit']"</span>);
+    }
+
+    <span class="kw">public void</span> <span class="fn">login</span>(<span class="typ">String</span> email, <span class="typ">String</span> password) {
+        emailInput.<span class="fn">fill</span>(email);
+        passwordInput.<span class="fn">fill</span>(password);
+        submitButton.<span class="fn">click</span>();
+    }
+}
+          </div>
+          <div class="pipe-tools" style="margin-top:1rem;">
+            <span class="pipe-tool">Page Object Model</span>
+            <span class="pipe-tool">Locator Strategies</span>
+            <span class="pipe-tool">Reusable Components</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">04</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Write JUnit Test Cases</p>
+          <p class="pipe-desc">
+            I write tests using JUnit 5's clean syntax with @Test annotations. Each test is independent,
+            follows the AAA pattern (Arrange, Act, Assert), and has a clear, descriptive name.
+            I use @BeforeEach and @AfterEach for setup/teardown to keep tests isolated.
+          </p>
+          <div class="code-block">
+<span class="cmt">// LoginTest.java - JUnit test example</span>
+<span class="kw">public class</span> <span class="typ">LoginTest</span> {
+    <span class="kw">private</span> <span class="typ">Playwright</span> playwright;
+    <span class="kw">private</span> <span class="typ">Browser</span> browser;
+    <span class="kw">private</span> <span class="typ">Page</span> page;
+
+    <span class="str">@BeforeEach</span>
+    <span class="kw">void</span> <span class="fn">setUp</span>() {
+        playwright = <span class="typ">Playwright</span>.<span class="fn">create</span>();
+        browser = playwright.<span class="fn">chromium</span>().<span class="fn">launch</span>();
+        page = browser.<span class="fn">newPage</span>();
+    }
+
+    <span class="str">@Test</span>
+    <span class="kw">void</span> <span class="fn">userCanLoginSuccessfully</span>() {
+        <span class="cmt">// Arrange</span>
+        <span class="typ">LoginPage</span> loginPage = <span class="kw">new</span> <span class="typ">LoginPage</span>(page);
+        page.<span class="fn">navigate</span>(<span class="str">"https://payassyst.aetdevops.com/"</span>);
+
+        <span class="cmt">// Act</span>
+        loginPage.<span class="fn">login</span>(<span class="str">"supplier@yopmail.com"</span>, <span class="str">"password@123"</span>);
+
+        <span class="cmt">// Assert</span>
+        <span class="fn">assertEquals</span>(<span class="str">"https://payassyst.aetdevops.com/"</span>, page.<span class="fn">url</span>());
+    }
+
+    <span class="str">@AfterEach</span>
+    <span class="kw">void</span> <span class="fn">tearDown</span>() {
+        browser.<span class="fn">close</span>();
+        playwright.<span class="fn">close</span>();
+    }
+}
+          </div>
+          <div class="pipe-tools" style="margin-top:1rem;">
+            <span class="pipe-tool">JUnit 5</span>
+            <span class="pipe-tool">Assertions</span>
+            <span class="pipe-tool">Test Lifecycle</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">05</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Add API Testing with REST Assured</p>
+          <p class="pipe-desc">
+            For API testing, I use REST Assured alongside Playwright. This lets me validate backend
+            responses, test API contracts, and verify data integrity. I can combine UI and API tests
+            to cover end-to-end workflows comprehensively.
+          </p>
+          <div class="code-block">
+<span class="cmt">// API test example with REST Assured</span>
+<span class="str">@Test</span>
+<span class="kw">void</span> <span class="fn">getUserReturnsValidResponse</span>() {
+    <span class="typ">Response</span> response = <span class="fn">given</span>()
+        .<span class="fn">header</span>(<span class="str">"Authorization"</span>, <span class="str">"Bearer token123"</span>)
+        .<span class="fn">when</span>()
+        .<span class="fn">get</span>(<span class="str">"https://payapi.aetdevops.com"</span>)
+        .<span class="fn">then</span>()
+        .<span class="fn">statusCode</span>(200)
+        .<span class="fn">extract</span>().<span class="fn">response</span>();
+
+    <span class="fn">assertEquals</span>(<span class="str">"Kanu Kennedy"</span>, response.<span class="fn">jsonPath</span>().<span class="fn">getString</span>(<span class="str">"name"</span>));
+}
+          </div>
+          <div class="pipe-tools" style="margin-top:1rem;">
+            <span class="pipe-tool">REST Assured</span>
+            <span class="pipe-tool">Postman</span>
+            <span class="pipe-tool">JSON Validation</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pipe-step reveal">
+        <div class="pipe-num">06</div>
+        <div class="pipe-content">
+          <p class="pipe-title">Integrate with CI/CD Pipeline</p>
+          <p class="pipe-desc">
+            Tests only matter if they run automatically. I configure GitHub Actions to trigger the
+            full test suite on every pull request and every merge to main. Maven handles the build
+            and test execution. Failed tests block deployment — quality is non-negotiable.
+          </p>
+          <div class="code-block">
+<span class="cmt"># .github/workflows/tests.yml</span>
+<span class="kw">name:</span> <span class="str">Run Automated Tests</span>
+<span class="kw">on:</span> [push, pull_request]
+
+<span class="kw">jobs:</span>
+  <span class="kw">test:</span>
+    <span class="kw">runs-on:</span> <span class="str">ubuntu-latest</span>
+    <span class="kw">steps:</span>
+      - <span class="kw">uses:</span> <span class="str">actions/checkout@v3</span>
+      
+      - <span class="kw">name:</span> <span class="str">Set up JDK 11</span>
+        <span class="kw">uses:</span> <span class="str">actions/setup-java@v3</span>
+        <span class="kw">with:</span>
+          <span class="kw">java-version:</span> <span class="str">'11'</span>
+      
+      - <span class="kw">name:</span> <span class="str">Install Playwright browsers</span>
+        <span class="kw">run:</span> <span class="str">mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"</span>
+      
+      - <span class="kw">name:</span> <span class="str">Run tests</span>
+        <span class="kw">run:</span> <span class="str">mvn clean test</span>
+      
+      - <span class="kw">name:</span> <span class="str">Upload test report</span>
+        <span class="kw">uses:</span> <span class="str">actions/upload-artifact@v3</span>
+        <span class="kw">with:</span>
+          <span class="kw">name:</span> <span class="str">test-results</span>
+          <span class="kw">path:</span> <span class="str">target/surefire-reports</span>
+          </div>
+          <div class="pipe-tools" style="margin-top:1rem;">
+            <span class="pipe-tool">GitHub Actions</span>
+            <span class="pipe-tool">Maven Surefire</span>
+            <span class="pipe-tool">Test Reports</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="reveal">
+      <p class="section-label">05 — My Work</p>
+      <h2 class="section-title">Projects</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="projects-grid">
+
+      <div class="project-card reveal">
+        <div class="project-card-header">
+          <span class="project-num">001</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+            <a href="#" class="project-link">Report</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-type">UI Test Automation</p>
+          <h3 class="project-title">E-commerce Test Suite</h3>
+          <p class="project-desc">
+            Comprehensive Playwright + JUnit test suite covering user registration, product search,
+            cart management, and checkout flows. Implemented Page Object Model with reusable components.
+            Integrated with GitHub Actions for automated regression testing on every commit.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Java</span>
+            <span class="stack-tag">Playwright</span>
+            <span class="stack-tag">JUnit</span>
+            <span class="stack-tag">Maven</span>
+            <span class="stack-tag">GitHub Actions</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-header">
+          <span class="project-num">002</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-type">API Test Automation</p>
+          <h3 class="project-title">REST API Validation Framework</h3>
+          <p class="project-desc">
+            Built a REST API testing framework using REST Assured and JUnit. Validates endpoints,
+            status codes, response schemas, and data integrity. Includes positive/negative test cases,
+            authentication testing, and automated API contract validation.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Java</span>
+            <span class="stack-tag">REST Assured</span>
+            <span class="stack-tag">JUnit</span>
+            <span class="stack-tag">Postman</span>
+            <span class="stack-tag">JSON Schema</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-header">
+          <span class="project-num">003</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-type">Data-Driven Testing</p>
+          <h3 class="project-title">Login Test Automation</h3>
+          <p class="project-desc">
+            Data-driven test framework for login functionality using JUnit @ParameterizedTest.
+            Tests multiple user credentials from CSV files, validates error messages for invalid
+            inputs, and ensures proper session management across different user roles.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Java</span>
+            <span class="stack-tag">Playwright</span>
+            <span class="stack-tag">JUnit</span>
+            <span class="stack-tag">CSV Test Data</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-card reveal">
+        <div class="project-card-header">
+          <span class="project-num">004</span>
+          <div class="project-links">
+            <a href="#" class="project-link">GitHub</a>
+          </div>
+        </div>
+        <div class="project-body">
+          <p class="project-type">Database Testing</p>
+          <h3 class="project-title">SQL Validation Suite</h3>
+          <p class="project-desc">
+            Database testing framework that validates data integrity, CRUD operations, and SQL query
+            correctness. Uses JDBC to connect to PostgreSQL, runs assertions on query results, and
+            verifies foreign key constraints and triggers work as expected.
+          </p>
+          <div class="project-stack">
+            <span class="stack-tag">Java</span>
+            <span class="stack-tag">JUnit</span>
+            <span class="stack-tag">JDBC</span>
+            <span class="stack-tag">PostgreSQL</span>
+            <span class="stack-tag">SQL</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="contact-glow"></div>
+    <div class="reveal">
+      <p class="section-label">06 — Let's Talk</p>
+      <h2 class="section-title">Get in Touch</h2>
+      <div class="section-divider"></div>
+    </div>
+
+    <div class="contact-grid">
+      <div class="contact-left reveal">
+        <p>
+          I'm currently open to new opportunities — whether that's a full-time QA role, contract
+          work, or a collaborative project. If you value quality, automation, and thoroughness,
+          let's build something reliable together.
+        </p>
+
+        <div class="contact-info-item">
+          <div class="contact-icon">✉</div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">Email</span>
+            kanukennedy20@gmail.com
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">📍</div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">Location</span>
+            Open to Remote / Hybrid
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <div class="contact-icon">⏱</div>
+          <div class="contact-info-text">
+            <span class="contact-info-label">Response Time</span>
+            Within 24 hours
+          </div>
+        </div>
+
+        <div class="social-row">
+          <a href="https://github.com/Ken-nedy1" class="social-btn">GitHub</a>
+          <a href="https://www.linkedin.com/in/kennedy-kanu-676882315/" class="social-btn">LinkedIn</a>
+          <a href="#" class="social-btn">Twitter</a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form action="https://formsubmit.co/32707257cd80bf8e62691928f327eec5" method="POST" class="contact-form">
+        <!-- Honeypot for spam protection -->
+        <input type="text" name="_honey" style="display:none">
+
+        <!-- Disable reCAPTCHA -->
+        <input type="hidden" name="_captcha" value="false">
+
+        <!-- Custom success page (optional) -->
+        <input type="hidden" name="_next" value="./thank-you.html">
+
+        <!-- Email subject line -->
+        <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission!">
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input type="text" name="first_name" class="form-input" placeholder="John" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input type="text" name="last_name" class="form-input" placeholder="Doe" required />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" name="email" class="form-input" placeholder="john@company.com" required />
+        </div>
+        <div class="form-group">
+          <label class="form-label">Enquiry Type</label>
+          <select name="enquiry_type" class="form-select" required>
+            <option value="">Select an option</option>
+            <option>Full-time Role</option>
+            <option>Contract / Freelance</option>
+            <option>Collaboration</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea name="message" class="form-textarea" placeholder="Tell me about your project or opportunity..." required></textarea>
+        </div>
+        <button type="submit" class="form-submit">Send Message →</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p class="footer-copy">
+      © 2026 <span>Kanu Kennedy</span> — Built with care & tested thoroughly.
+    </p>
+    <a href="#hero" class="footer-back">↑ Back to top</a>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx - 6 + 'px';
+      cursor.style.top = my - 6 + 'px';
+    });
+
+    function animRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx - 18 + 'px';
+      ring.style.top = ry - 18 + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+
+    document.querySelectorAll('a, button, .project-card, .qa-card, .skill-category').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'scale(2.5)';
+        ring.style.transform = 'scale(1.5)';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'scale(1)';
+        ring.style.transform = 'scale(1)';
+      });
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+
+    // Skill bars animation
+    const skillBars = document.querySelectorAll('.skill-bar-fill');
+    const barObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const w = entry.target.getAttribute('data-width');
+          entry.target.style.width = w + '%';
+          barObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    skillBars.forEach(bar => barObserver.observe(bar));
+
+    // Active nav on scroll
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (pageYOffset >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.classList.remove('active');
+        if (a.getAttribute('href') === '#' + current) a.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
