@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Ken The QA</title>
   
-  <!-- Favicon - KK Logo -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d0d0d'/%3E%3Ctext x='50' y='70' font-size='60' font-family='Arial, sans-serif' font-weight='bold' text-anchor='middle' fill='%23c8f135'%3EKK%3C/text%3E%3C/svg%3E">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,8 +35,12 @@
       overflow-x: hidden;
     }
 
-    /* Custom Cursor - Desktop Only */
-    @media (min-width: 1025px) {
+    /* ============================================
+       CUSTOM CURSOR — Desktop only
+       ============================================ */
+    .cursor, .cursor-ring { display: none; }
+
+    @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
       body { cursor: none; }
       .cursor {
         position: fixed;
@@ -48,6 +51,7 @@
         z-index: 9999;
         transition: transform 0.15s ease;
         mix-blend-mode: difference;
+        display: block;
       }
       .cursor-ring {
         position: fixed;
@@ -58,16 +62,13 @@
         z-index: 9998;
         transition: transform 0.35s ease;
         mix-blend-mode: difference;
+        display: block;
       }
     }
 
-    @media (max-width: 1024px) {
-      .cursor, .cursor-ring { display: none; }
-      body { cursor: auto; }
-      a, button { cursor: pointer !important; }
-    }
-
-    /* Nav */
+    /* ============================================
+       NAV
+       ============================================ */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
@@ -123,7 +124,9 @@
     }
     .nav-cta:hover { background: var(--accent2); transform: translateY(-2px); }
 
-    /* Hero */
+    /* ============================================
+       HERO
+       ============================================ */
     #hero {
       min-height: 100vh;
       display: flex;
@@ -273,7 +276,9 @@
       50% { opacity: 1; transform: scaleY(0.6); }
     }
 
-    /* Sections */
+    /* ============================================
+       SECTIONS
+       ============================================ */
     section {
       padding: 7rem 4rem;
       position: relative;
@@ -303,7 +308,9 @@
       margin-bottom: 3rem;
     }
 
-    /* About */
+    /* ============================================
+       ABOUT
+       ============================================ */
     #about { background: var(--bg2); }
 
     .about-grid {
@@ -377,9 +384,7 @@
       color: var(--text);
     }
 
-    .about-list {
-      list-style: none;
-    }
+    .about-list { list-style: none; }
     .about-list li {
       font-family: 'DM Mono', monospace;
       font-size: 0.82rem;
@@ -399,11 +404,10 @@
       flex-shrink: 0;
     }
 
-    /* Why QA */
-    #why-qa {
-      background: var(--bg);
-      overflow: hidden;
-    }
+    /* ============================================
+       WHY QA
+       ============================================ */
+    #why-qa { background: var(--bg); overflow: hidden; }
 
     .why-qa-intro {
       max-width: 700px;
@@ -428,10 +432,7 @@
     }
     .qa-card:hover { background: var(--bg3); }
 
-    .qa-icon {
-      font-size: 2rem;
-      margin-bottom: 1.2rem;
-    }
+    .qa-icon { font-size: 2rem; margin-bottom: 1.2rem; }
 
     .qa-card-title {
       font-family: 'Syne', sans-serif;
@@ -463,7 +464,9 @@
       text-transform: uppercase;
     }
 
-    /* Skills */
+    /* ============================================
+       SKILLS
+       ============================================ */
     #skills { background: var(--bg2); }
 
     .skills-grid {
@@ -496,9 +499,7 @@
       margin-bottom: 1.5rem;
     }
 
-    .skill-bar-row {
-      margin-bottom: 1rem;
-    }
+    .skill-bar-row { margin-bottom: 1rem; }
 
     .skill-bar-top {
       display: flex;
@@ -552,7 +553,9 @@
     }
     .tech-tag:hover { border-color: var(--teal); color: var(--teal); }
 
-    /* Automation Guide */
+    /* ============================================
+       AUTOMATION
+       ============================================ */
     #automation { background: var(--bg); }
 
     .automation-intro {
@@ -606,10 +609,7 @@
       z-index: 1;
     }
 
-    .pipe-content {
-      flex: 1;
-      min-width: 0;
-    }
+    .pipe-content { flex: 1; min-width: 0; }
 
     .pipe-title {
       font-family: 'Syne', sans-serif;
@@ -653,6 +653,7 @@
       line-height: 1.8;
       overflow-x: auto;
       word-wrap: break-word;
+      white-space: pre-wrap;
     }
 
     .code-block .kw { color: var(--accent); }
@@ -661,7 +662,9 @@
     .code-block .fn { color: #f1c835; }
     .code-block .typ { color: #ff8c69; }
 
-    /* Projects */
+    /* ============================================
+       PROJECTS
+       ============================================ */
     #projects { background: var(--bg2); }
 
     .projects-grid {
@@ -697,10 +700,7 @@
       letter-spacing: 0.2em;
     }
 
-    .project-links {
-      display: flex;
-      gap: 0.7rem;
-    }
+    .project-links { display: flex; gap: 0.7rem; }
 
     .project-link {
       font-family: 'DM Mono', monospace;
@@ -715,9 +715,7 @@
     }
     .project-link:hover { border-color: var(--accent); color: var(--accent); }
 
-    .project-body {
-      padding: 1.8rem 2rem 2rem;
-    }
+    .project-body { padding: 1.8rem 2rem 2rem; }
 
     .project-title {
       font-family: 'Syne', sans-serif;
@@ -758,7 +756,9 @@
       letter-spacing: 0.06em;
     }
 
-    /* Contact */
+    /* ============================================
+       CONTACT
+       ============================================ */
     #contact {
       background: var(--bg);
       position: relative;
@@ -842,7 +842,9 @@
     }
     .social-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-    /* Form */
+    /* ============================================
+       FORM
+       ============================================ */
     .contact-form {
       display: flex;
       flex-direction: column;
@@ -899,10 +901,13 @@
       font-weight: 500;
       align-self: flex-start;
       transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
     }
     .form-submit:hover { background: var(--accent2); transform: translateY(-2px); }
 
-    /* Footer */
+    /* ============================================
+       FOOTER
+       ============================================ */
     footer {
       background: var(--bg2);
       border-top: 1px solid var(--border);
@@ -932,7 +937,9 @@
     }
     .footer-back:hover { color: var(--accent); }
 
-    /* Animations */
+    /* ============================================
+       ANIMATIONS
+       ============================================ */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(24px); }
       to { opacity: 1; transform: translateY(0); }
@@ -952,267 +959,514 @@
       transform: translateY(0);
     }
 
-    /* Scrollbar */
+    /* ============================================
+       SCROLLBAR
+       ============================================ */
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--border); }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
+    /* ============================================================
+       COMPREHENSIVE RESPONSIVE MEDIA QUERIES
+       Covers: Smartwatch → Tiny phone → Small phone → 
+               Medium phone → Large phone → Phablet → 
+               Small tablet → Tablet → Large tablet → 
+               Small laptop → Laptop → Desktop → 
+               Large desktop → Ultra-wide → 8K
+       ============================================================ */
+
+    /* --- SMARTWATCH / TINY WEARABLES (≤ 200px) --- */
+    @media (max-width: 200px) {
+      :root { font-size: 55%; }
+
+      nav { padding: 0.5rem; }
+      .nav-logo { font-size: 0.8rem; }
+      .nav-links { display: none; }
+      .nav-cta { display: none; }
+
+      #hero { padding: 5rem 0.5rem 2rem; min-height: auto; }
+      .hero-name { font-size: 1.6rem; }
+      .hero-eyebrow { font-size: 0.55rem; letter-spacing: 0.1em; margin-bottom: 0.8rem; }
+      .hero-subtitle { font-size: 0.65rem; margin-top: 0.8rem; }
+      .hero-tags { display: none; }
+      .hero-cta-row { flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+      .btn-primary, .btn-outline { font-size: 0.6rem; padding: 0.5rem 0.8rem; width: 100%; text-align: center; }
+      .hero-scroll, .hero-glow { display: none; }
+      .hero-grid-bg { background-size: 20px 20px; }
+
+      section { padding: 2rem 0.5rem; }
+      .section-title { font-size: 1.2rem; }
+      .section-label { font-size: 0.55rem; }
+      .section-divider { margin-bottom: 1.5rem; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 1rem; }
+      .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+      .stat-num { font-size: 1.4rem; }
+      .about-list li { font-size: 0.65rem; }
+      .qa-card { padding: 1rem; }
+      .qa-card-text, .pipe-desc, .project-desc { font-size: 0.65rem; }
+      .code-block { font-size: 0.5rem; padding: 0.6rem; }
+      .pipe-num { width: 28px; height: 28px; min-width: 28px; font-size: 0.55rem; }
+      .pipe-step { gap: 0.5rem; padding: 1rem 0; }
+      .pipeline::before { left: 14px; }
+      .project-card-header, .project-body { padding: 0.8rem; }
+      .project-title { font-size: 0.85rem; }
+      footer { padding: 1rem 0.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+
+    /* --- VERY SMALL PHONES (201px – 320px) --- */
+    @media (min-width: 201px) and (max-width: 320px) {
+      :root { font-size: 70%; }
+
+      nav { padding: 0.75rem 1rem; }
+      .nav-logo { font-size: 0.9rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.65rem; padding: 0.4rem 0.7rem; }
+
+      #hero { padding: 5rem 1rem 2rem; min-height: 90vh; }
+      .hero-name { font-size: clamp(2rem, 14vw, 2.8rem); }
+      .hero-eyebrow { font-size: 0.6rem; letter-spacing: 0.15em; margin-bottom: 1rem; }
+      .hero-subtitle { font-size: 0.7rem; margin-top: 1rem; }
+      .hero-tags { gap: 0.4rem; margin-top: 1.2rem; }
+      .tag { font-size: 0.58rem; padding: 0.25rem 0.5rem; }
+      .hero-cta-row { flex-direction: column; gap: 0.6rem; margin-top: 1.5rem; }
+      .btn-primary, .btn-outline { font-size: 0.65rem; padding: 0.7rem 1rem; width: 100%; text-align: center; }
+      .hero-scroll { display: none; }
+
+      section { padding: 3rem 1rem; }
+      .section-title { font-size: clamp(1.5rem, 10vw, 2rem); }
+      .section-label { font-size: 0.6rem; letter-spacing: 0.2em; }
+      .section-divider { margin-bottom: 2rem; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+      .stat-num { font-size: 1.8rem; }
+      .about-right-card { padding: 1.5rem; }
+      .about-list li { font-size: 0.68rem; padding: 0.5rem 0; }
+      .qa-card { padding: 1.5rem 1rem; }
+      .qa-card-text { font-size: 0.68rem; }
+      .pipe-num { width: 36px; height: 36px; min-width: 36px; font-size: 0.62rem; }
+      .pipe-step { gap: 0.8rem; padding: 1.2rem 0; }
+      .pipe-title { font-size: 0.9rem; }
+      .pipe-desc { font-size: 0.68rem; }
+      .pipeline::before { left: 18px; }
+      .code-block { font-size: 0.55rem; padding: 0.8rem; }
+      .project-card-header, .project-body { padding: 1rem; }
+      .project-title { font-size: 0.95rem; }
+      .project-desc { font-size: 0.68rem; }
+      footer { padding: 1.5rem 1rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+
+    /* --- SMALL PHONES (321px – 375px) --- */
+    @media (min-width: 321px) and (max-width: 375px) {
+      :root { font-size: 78%; }
+
+      nav { padding: 0.9rem 1.2rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.68rem; padding: 0.45rem 0.85rem; }
+
+      #hero { padding: 5.5rem 1.2rem 2rem; min-height: 90vh; }
+      .hero-name { font-size: clamp(2.2rem, 13vw, 3rem); }
+      .hero-subtitle { font-size: 0.74rem; max-width: 100%; }
+      .hero-tags { margin-top: 1.5rem; }
+      .tag { font-size: 0.6rem; padding: 0.28rem 0.6rem; }
+      .hero-cta-row { flex-direction: column; gap: 0.7rem; margin-top: 1.8rem; }
+      .btn-primary, .btn-outline { font-size: 0.7rem; padding: 0.75rem 1.2rem; width: 100%; text-align: center; }
+      .hero-scroll { display: none; }
+
+      section { padding: 3.5rem 1.2rem; }
+      .section-title { font-size: clamp(1.6rem, 9vw, 2.2rem); }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 1.8rem; }
+      .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .stat-num { font-size: 2rem; }
+      .about-right-card { padding: 1.5rem; }
+      .pipe-num { width: 40px; height: 40px; min-width: 40px; }
+      .pipeline::before { left: 20px; }
+      .pipe-title { font-size: 0.95rem; }
+      .pipe-desc { font-size: 0.72rem; }
+      .code-block { font-size: 0.58rem; padding: 0.9rem; }
+      .project-card-header, .project-body { padding: 1.2rem; }
+      .project-title { font-size: 1rem; }
+      footer { padding: 1.8rem 1.2rem; flex-direction: column; gap: 0.8rem; text-align: center; }
+    }
+
+    /* --- STANDARD PHONES (376px – 430px) --- */
+    @media (min-width: 376px) and (max-width: 430px) {
+      :root { font-size: 85%; }
+
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.7rem; padding: 0.5rem 1rem; }
+
+      #hero { padding: 5.5rem 1.5rem 2rem; min-height: 88vh; }
+      .hero-name { font-size: clamp(2.5rem, 12vw, 3.4rem); }
+      .hero-subtitle { font-size: 0.78rem; max-width: 100%; }
+      .hero-cta-row { flex-direction: column; gap: 0.8rem; margin-top: 2rem; }
+      .btn-primary, .btn-outline { width: 100%; text-align: center; font-size: 0.72rem; }
+      .hero-scroll { display: none; }
+
+      section { padding: 4rem 1.5rem; }
+      .section-title { font-size: clamp(1.8rem, 8vw, 2.4rem); }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      .stat-num { font-size: 2.1rem; }
+      .pipe-num { width: 44px; height: 44px; min-width: 44px; }
+      .pipeline::before { left: 22px; }
+      .pipe-desc { font-size: 0.74rem; }
+      .code-block { font-size: 0.6rem; padding: 1rem; }
+      .project-card-header, .project-body { padding: 1.4rem; }
+      footer { padding: 2rem 1.5rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* --- LARGE PHONES / PHABLETS (431px – 540px) --- */
+    @media (min-width: 431px) and (max-width: 540px) {
+      :root { font-size: 90%; }
+
+      nav { padding: 1rem 1.8rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.72rem; padding: 0.52rem 1.1rem; }
+
+      #hero { padding: 5.5rem 1.8rem 2rem; }
+      .hero-name { font-size: clamp(2.8rem, 11vw, 3.8rem); }
+      .hero-subtitle { font-size: 0.82rem; max-width: 100%; }
+      .hero-cta-row { flex-direction: row; flex-wrap: wrap; gap: 0.8rem; margin-top: 2.2rem; }
+      .hero-scroll { display: none; }
+
+      section { padding: 4.5rem 1.8rem; }
+      .section-title { font-size: clamp(1.9rem, 7vw, 2.6rem); }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .qa-cards { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .pipe-num { width: 46px; height: 46px; min-width: 46px; }
+      .pipeline::before { left: 23px; }
+      .code-block { font-size: 0.63rem; }
+      footer { padding: 2rem 1.8rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* --- SMALL TABLETS / LARGE PHABLETS (541px – 667px) --- */
+    @media (min-width: 541px) and (max-width: 667px) {
+      :root { font-size: 95%; }
+
+      nav { padding: 1.1rem 2rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.74rem; }
+
+      #hero { padding: 5.5rem 2rem 2rem; }
+      .hero-name { font-size: clamp(3rem, 10vw, 4.2rem); }
+      .hero-subtitle { max-width: 90%; }
+      .hero-scroll { display: none; }
+
+      section { padding: 5rem 2rem; }
+
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .projects-grid, .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .qa-cards { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .form-submit { width: 100%; }
+      .about-stats { grid-template-columns: 1fr 1fr; }
+      .pipe-num { width: 48px; height: 48px; min-width: 48px; }
+      .pipeline::before { left: 24px; }
+      .code-block { font-size: 0.65rem; }
+      footer { padding: 2rem; flex-direction: column; gap: 1rem; text-align: center; }
+    }
+
+    /* --- TABLETS PORTRAIT (668px – 768px) --- */
+    @media (min-width: 668px) and (max-width: 768px) {
+      :root { font-size: 100%; }
+
+      nav { padding: 1.2rem 2.5rem; }
+      .nav-links { display: none; }
+      .nav-cta { font-size: 0.76rem; }
+
+      #hero { padding: 6rem 2.5rem 2rem; }
+      .hero-name { font-size: clamp(3.2rem, 9vw, 4.8rem); }
+      .hero-subtitle { max-width: 85%; }
+      .hero-scroll { display: none; }
+
+      section { padding: 5rem 2.5rem; }
+
+      .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .qa-cards { grid-template-columns: 1fr 1fr; }
+      .form-row { grid-template-columns: 1fr 1fr; }
+      .form-submit { align-self: flex-start; }
+      .about-stats { grid-template-columns: repeat(4, 1fr); }
+      .pipe-step { gap: 1.5rem; }
+      .code-block { font-size: 0.66rem; }
+      footer { padding: 2rem 2.5rem; flex-direction: row; }
+    }
+
+    /* --- TABLETS LANDSCAPE (769px – 1024px) --- */
+    @media (min-width: 769px) and (max-width: 1024px) {
+      :root { font-size: 105%; }
+
+      nav { padding: 1.2rem 2.5rem; }
+      .nav-links { display: flex; gap: 1.4rem; }
+      .nav-links a { font-size: 0.7rem; }
+      .nav-cta { font-size: 0.72rem; padding: 0.48rem 1rem; }
+
+      #hero { padding: 0 2.5rem; }
+      .hero-name { font-size: clamp(3rem, 7vw, 5.5rem); }
+
+      section { padding: 5.5rem 2.5rem; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 3rem; }
+      .about-stats { grid-template-columns: repeat(4, 1fr); }
+      .contact-grid { grid-template-columns: 1fr 1fr; gap: 3rem; }
+      .projects-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .skills-grid { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+      .qa-cards { grid-template-columns: repeat(2, 1fr); }
+      .pipe-step { gap: 1.8rem; }
+      .code-block { font-size: 0.68rem; padding: 1.2rem; }
+      footer { padding: 2.2rem 2.5rem; }
+    }
+
+    /* --- SMALL LAPTOPS (1025px – 1199px) --- */
+    @media (min-width: 1025px) and (max-width: 1199px) {
+      :root { font-size: 108%; }
+
+      nav { padding: 1.3rem 3rem; }
+      .nav-links { gap: 1.8rem; }
+
+      #hero { padding: 0 3rem; }
+      .hero-name { font-size: clamp(4rem, 7.5vw, 6rem); }
+
+      section { padding: 6rem 3rem; }
+
+      .about-grid { grid-template-columns: 1fr 1fr; gap: 3.5rem; }
+      .contact-grid { grid-template-columns: 1fr 1.2fr; gap: 3.5rem; }
+      .qa-cards { grid-template-columns: repeat(3, 1fr); }
+      .code-block { font-size: 0.7rem; }
+      footer { padding: 2.3rem 3rem; }
+    }
+
+    /* --- STANDARD LAPTOPS / DESKTOPS (1200px – 1439px) --- */
+    /* This is the base design — no overrides needed; defaults apply */
+
+    /* --- LARGE DESKTOPS (1440px – 1679px) --- */
+    @media (min-width: 1440px) and (max-width: 1679px) {
+      :root { font-size: 120%; }
+
+      nav { padding: 1.5rem 5rem; }
+      .nav-links { gap: 2.8rem; }
+
+      #hero { padding: 0 5rem; }
+
+      section { padding: 7.5rem 5rem; }
+
+      .about-grid, .contact-grid {
+        max-width: 1380px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      footer { padding: 2.5rem 5rem; }
+    }
+
+    /* --- XL MONITORS (1680px – 1919px) --- */
+    @media (min-width: 1680px) and (max-width: 1919px) {
+      :root { font-size: 130%; }
+
+      nav { padding: 1.6rem 6rem; }
+      .nav-links { gap: 3rem; }
+
+      #hero { padding: 0 6rem; }
+      .hero-name { font-size: clamp(6rem, 8vw, 8.5rem); }
+
+      section { padding: 8rem 6rem; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid {
+        max-width: 1600px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .qa-cards { max-width: 1600px; margin-left: auto; margin-right: auto; }
+
+      footer { padding: 2.8rem 6rem; }
+    }
+
+    /* --- FULL HD / 2K (1920px – 2559px) --- */
+    @media (min-width: 1920px) and (max-width: 2559px) {
+      :root { font-size: 140%; }
+
+      nav { padding: 1.8rem 8rem; }
+      .nav-links { gap: 3.5rem; }
+
+      #hero { padding: 0 8rem; }
+      .hero-name { font-size: clamp(6.5rem, 7vw, 9rem); }
+      .hero-subtitle { max-width: 700px; }
+
+      section { padding: 9rem 8rem; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid, .qa-cards, .pipeline {
+        max-width: 1800px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      footer { padding: 3rem 8rem; }
+    }
+
+    /* --- 4K / UHD (2560px – 3839px) --- */
+    @media (min-width: 2560px) and (max-width: 3839px) {
+      :root { font-size: 180%; }
+
+      nav { padding: 2rem 10rem; }
+      .nav-links { gap: 4rem; }
+      .nav-logo { font-size: 1.3rem; }
+
+      #hero { padding: 0 10rem; }
+      .hero-name { font-size: clamp(7rem, 7vw, 11rem); }
+      .hero-subtitle { max-width: 900px; font-size: clamp(0.85rem, 1.5vw, 1.1rem); }
+      .hero-grid-bg { background-size: 100px 100px; }
+
+      section { padding: 10rem 10rem; }
+      .section-divider { width: 80px; height: 3px; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid, .qa-cards, .pipeline {
+        max-width: 2400px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .code-block { font-size: 0.75rem; }
+      footer { padding: 3.5rem 10rem; }
+    }
+
+    /* --- 8K / EXTREME WIDE (3840px+) --- */
+    @media (min-width: 3840px) {
+      :root { font-size: 220%; }
+
+      nav { padding: 2.5rem 14rem; }
+      .nav-links { gap: 5rem; }
+      .nav-logo { font-size: 1.5rem; }
+
+      #hero { padding: 0 14rem; }
+      .hero-name { font-size: clamp(8rem, 6vw, 13rem); }
+      .hero-subtitle { max-width: 1100px; }
+      .hero-grid-bg { background-size: 120px 120px; }
+      .hero-glow { width: 1400px; height: 1400px; top: -400px; right: -400px; }
+
+      section { padding: 12rem 14rem; }
+
+      .about-grid, .contact-grid, .projects-grid, .skills-grid, .qa-cards, .pipeline {
+        max-width: 3200px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .section-divider { width: 100px; height: 4px; }
+      footer { padding: 4rem 14rem; }
+    }
+
     /* ============================================
-       RESPONSIVE MEDIA QUERIES
+       LANDSCAPE ORIENTATION OVERRIDES
+       (short screens in landscape mode)
        ============================================ */
-
-    /* Tablet - 768px to 1024px */
-    @media (max-width: 1024px) {
-      nav {
-        padding: 1.2rem 2.5rem;
-      }
-      
-      .nav-links {
-        gap: 1.8rem;
-      }
-      
-      .nav-links a {
-        font-size: 0.72rem;
-      }
-      
-      section {
-        padding: 5rem 2.5rem;
-      }
-      
-      #hero {
-        padding: 0 2.5rem;
-        min-height: 90vh;
-      }
-      
-      .about-grid, .contact-grid, .skills-grid {
-        gap: 3rem;
-      }
-      
-      .qa-cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      
-      .pipe-step {
-        gap: 1.5rem;
-      }
-      
-      .code-block {
-        font-size: 0.7rem;
-        padding: 1.2rem;
-      }
-    }
-
-    /* Mobile Large - 481px to 767px */
-    @media (max-width: 767px) {
-      nav {
-        padding: 1rem 1.5rem;
-      }
-      
-      .nav-links {
-        display: none;
-      }
-      
-      .nav-cta {
-        font-size: 0.7rem;
-        padding: 0.5rem 1rem;
-      }
-      
-      section {
-        padding: 4rem 1.5rem;
-      }
-      
-      #hero {
-        padding: 0 1.5rem;
-        min-height: 85vh;
-      }
-      
-      .hero-name {
-        font-size: clamp(2.5rem, 10vw, 4rem);
-      }
-      
-      .hero-subtitle {
-        max-width: 100%;
-      }
-      
-      .hero-cta-row {
-        flex-direction: column;
-        gap: 0.8rem;
-        width: 100%;
-      }
-      
-      .btn-primary, .btn-outline {
-        width: 100%;
-        text-align: center;
-        justify-content: center;
-      }
-      
-      .hero-scroll {
-        display: none;
-      }
-      
-      .about-grid,
-      .contact-grid,
-      .projects-grid,
-      .skills-grid,
-      .qa-cards {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-      }
-      
-      .form-row {
-        grid-template-columns: 1fr;
-      }
-      
-      .form-submit {
-        width: 100%;
-      }
-      
-      .pipe-step {
-        gap: 1rem;
-      }
-      
-      .pipe-num {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        font-size: 0.7rem;
-      }
-      
-      .pipeline::before {
-        left: 22px;
-      }
-      
-      .pipe-title {
-        font-size: 1rem;
-      }
-      
-      .pipe-desc {
-        font-size: 0.75rem;
-      }
-      
-      .code-block {
-        font-size: 0.65rem;
-        padding: 1rem;
-        margin-left: -0.5rem;
-        margin-right: -0.5rem;
-      }
-      
-      .about-stats {
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-      }
-      
-      .stat-num {
-        font-size: 2rem;
-      }
-      
-      footer {
-        flex-direction: column;
-        gap: 1rem;
-        text-align: center;
-        padding: 2rem 1.5rem;
-      }
-      
-      .social-row {
-        justify-content: center;
-      }
-    }
-
-    /* Mobile Small - 320px to 480px */
-    @media (max-width: 480px) {
-      .section-title {
-        font-size: clamp(1.8rem, 8vw, 2.5rem);
-      }
-      
-      .hero-name {
-        font-size: clamp(2rem, 12vw, 3rem);
-      }
-      
-      .hero-tags {
-        gap: 0.5rem;
-      }
-      
-      .tag {
-        font-size: 0.65rem;
-        padding: 0.3rem 0.7rem;
-      }
-      
-      .about-stats {
-        grid-template-columns: 1fr;
-      }
-      
-      .qa-card {
-        padding: 2rem 1.5rem;
-      }
-      
-      .project-card-header,
-      .project-body {
-        padding: 1.5rem;
-      }
-      
-      .code-block {
-        font-size: 0.6rem;
-      }
-      
-      .pipe-desc {
-        font-size: 0.72rem;
-      }
-    }
-
-    /* Landscape phones */
-    @media (max-height: 600px) and (orientation: landscape) {
+    @media (max-height: 500px) and (orientation: landscape) {
       #hero {
         min-height: auto;
-        padding: 8rem 1.5rem 4rem;
+        padding-top: 6rem;
+        padding-bottom: 3rem;
       }
-      
-      .hero-scroll {
-        display: none;
-      }
+      .hero-scroll { display: none; }
+      .hero-name { font-size: clamp(2rem, 8vw, 3.5rem); }
+      .hero-subtitle { margin-top: 0.8rem; }
+      .hero-tags { margin-top: 1rem; }
+      .hero-cta-row { margin-top: 1.2rem; }
     }
 
-    /* Large Desktop - 1440px+ */
-    @media (min-width: 1440px) {
-      section {
-        padding: 8rem 6rem;
-      }
-      
+    @media (max-height: 700px) and (min-width: 768px) and (orientation: landscape) {
       #hero {
-        padding: 0 6rem;
+        min-height: auto;
+        padding-top: 7rem;
+        padding-bottom: 4rem;
       }
-      
-      nav {
-        padding: 1.6rem 6rem;
-      }
-      
-      .about-grid,
-      .contact-grid {
-        max-width: 1400px;
-        margin: 0 auto;
-      }
+      .hero-scroll { display: none; }
     }
 
-    /* Print Styles */
+    /* ============================================
+       HIGH-DPI / RETINA SCREENS
+       ============================================ */
+    @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+      .skill-bar-bg { height: 2px; }
+      .section-divider { height: 1.5px; }
+    }
+
+    /* ============================================
+       TOUCH DEVICE OPTIMIZATIONS
+       (hover unavailable = touch screen)
+       ============================================ */
+    @media (hover: none) and (pointer: coarse) {
+      body { cursor: auto; }
+      .btn-primary:hover, .btn-outline:hover,
+      .nav-cta:hover, .form-submit:hover { transform: none; }
+      .project-card:hover { transform: none; }
+      .stat-box:hover, .skill-category:hover,
+      .qa-card:hover { border-color: var(--border); }
+    }
+
+    /* ============================================
+       FOLD / FLEX PHONES (narrow in folded state)
+       ============================================ */
+    @media (max-width: 280px) {
+      :root { font-size: 62%; }
+      nav { padding: 0.6rem 0.7rem; }
+      #hero { padding: 5rem 0.7rem 2rem; }
+      section { padding: 2.5rem 0.7rem; }
+      .code-block { font-size: 0.52rem; padding: 0.7rem; }
+      .about-right-card { padding: 1rem; }
+      .pipe-num { width: 30px; height: 30px; min-width: 30px; font-size: 0.58rem; }
+      .pipeline::before { left: 15px; }
+    }
+
+    /* ============================================
+       PRINT STYLES
+       ============================================ */
     @media print {
-      .cursor,
-      .cursor-ring,
-      nav,
-      .hero-scroll,
-      .form-submit,
-      .social-row,
-      footer {
-        display: none !important;
-      }
-      
-      body {
-        background: white;
-        color: black;
-      }
-      
-      section {
-        page-break-inside: avoid;
-      }
+      .cursor, .cursor-ring, nav, .hero-scroll,
+      .form-submit, .social-row, footer, .hero-glow,
+      .hero-grid-bg, .contact-glow { display: none !important; }
+
+      body { background: white; color: black; font-size: 100%; }
+      :root { --bg: white; --bg2: #f5f5f5; --bg3: #eeeeee; --card: #fafafa;
+              --border: #ccc; --text: #111; --muted: #555; --dim: #999; }
+
+      section { padding: 2rem 1.5rem; page-break-inside: avoid; }
+      #hero { min-height: auto; padding: 3rem 1.5rem; }
+      .hero-name { font-size: 3rem; }
+      .reveal { opacity: 1; transform: none; }
+    }
+
+    /* ============================================
+       REDUCED MOTION PREFERENCE
+       ============================================ */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+      .hero-eyebrow, .hero-name, .hero-subtitle,
+      .hero-tags, .hero-cta-row, .hero-scroll { opacity: 1; animation: none; }
+      .scroll-line { animation: none; }
     }
   </style>
 </head>
@@ -1581,7 +1835,7 @@
             Project structure follows best practices with clear separation of tests, page objects, and utilities.
           </p>
           <div class="code-block">
-<span class="cmt"><!-- pom.xml - Core dependencies --></span>
+<span class="cmt">&lt;!-- pom.xml - Core dependencies --&gt;</span>
 <span class="kw">&lt;dependencies&gt;</span>
   <span class="kw">&lt;dependency&gt;</span>
     <span class="kw">&lt;groupId&gt;</span>com.microsoft.playwright<span class="kw">&lt;/groupId&gt;</span>
@@ -1594,13 +1848,7 @@
     <span class="kw">&lt;version&gt;</span>5.10.0<span class="kw">&lt;/version&gt;</span>
     <span class="kw">&lt;scope&gt;</span>test<span class="kw">&lt;/scope&gt;</span>
   <span class="kw">&lt;/dependency&gt;</span>
-  <span class="kw">&lt;dependency&gt;</span>
-    <span class="kw">&lt;groupId&gt;</span>org.json<span class="kw">&lt;/groupId&gt;</span>
-    <span class="kw">&lt;artifactId&gt;</span>json<span class="kw">&lt;/artifactId&gt;</span>
-    <span class="kw">&lt;version&gt;</span>20231013<span class="kw">&lt;/version&gt;</span>
-  <span class="kw">&lt;/dependency&gt;</span>
-<span class="kw">&lt;/dependencies&gt;</span>
-          </div>
+<span class="kw">&lt;/dependencies&gt;</span></div>
           <div class="pipe-tools" style="margin-top:1rem;">
             <span class="pipe-tool">Maven</span>
             <span class="pipe-tool">JDK 11+</span>
@@ -1638,8 +1886,7 @@
         passwordInput.<span class="fn">fill</span>(password);
         submitButton.<span class="fn">click</span>();
     }
-}
-          </div>
+}</div>
           <div class="pipe-tools" style="margin-top:1rem;">
             <span class="pipe-tool">Page Object Model</span>
             <span class="pipe-tool">Locator Strategies</span>
@@ -1689,8 +1936,7 @@
         browser.<span class="fn">close</span>();
         playwright.<span class="fn">close</span>();
     }
-}
-          </div>
+}</div>
           <div class="pipe-tools" style="margin-top:1rem;">
             <span class="pipe-tool">JUnit 5</span>
             <span class="pipe-tool">Assertions</span>
@@ -1721,8 +1967,7 @@
         .<span class="fn">extract</span>().<span class="fn">response</span>();
 
     <span class="fn">assertEquals</span>(<span class="str">"John Doe"</span>, response.<span class="fn">jsonPath</span>().<span class="fn">getString</span>(<span class="str">"name"</span>));
-}
-          </div>
+}</div>
           <div class="pipe-tools" style="margin-top:1rem;">
             <span class="pipe-tool">REST Assured</span>
             <span class="pipe-tool">Postman</span>
@@ -1766,8 +2011,7 @@
         <span class="kw">uses:</span> <span class="str">actions/upload-artifact@v3</span>
         <span class="kw">with:</span>
           <span class="kw">name:</span> <span class="str">test-results</span>
-          <span class="kw">path:</span> <span class="str">target/surefire-reports</span>
-          </div>
+          <span class="kw">path:</span> <span class="str">target/surefire-reports</span></div>
           <div class="pipe-tools" style="margin-top:1rem;">
             <span class="pipe-tool">GitHub Actions</span>
             <span class="pipe-tool">Maven Surefire</span>
@@ -1979,8 +2223,8 @@
   </footer>
 
   <script>
-    // Custom cursor - Desktop only
-    if (window.innerWidth > 1024) {
+    // Custom cursor — Desktop with fine pointer only
+    if (window.innerWidth > 1024 && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
       const cursor = document.getElementById('cursor');
       const ring = document.getElementById('cursorRing');
       let mx = 0, my = 0, rx = 0, ry = 0;
