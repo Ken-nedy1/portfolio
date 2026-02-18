@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Kanu Kennedy — QA Automation Engineer</title>
+  
+  <!-- Favicon - KK Logo -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230d0d0d'/%3E%3Ctext x='50' y='70' font-size='60' font-family='Arial, sans-serif' font-weight='bold' text-anchor='middle' fill='%23c8f135'%3EKK%3C/text%3E%3C/svg%3E">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <style>
@@ -23,37 +27,43 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
       font-family: 'Lora', serif;
       overflow-x: hidden;
-      cursor: none;
     }
 
-    /* Custom Cursor */
-    .cursor {
-      position: fixed;
-      width: 12px; height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.15s ease, background 0.2s;
-      mix-blend-mode: difference;
+    /* Custom Cursor - Desktop Only */
+    @media (min-width: 1025px) {
+      body { cursor: none; }
+      .cursor {
+        position: fixed;
+        width: 12px; height: 12px;
+        background: var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9999;
+        transition: transform 0.15s ease;
+        mix-blend-mode: difference;
+      }
+      .cursor-ring {
+        position: fixed;
+        width: 36px; height: 36px;
+        border: 1.5px solid var(--accent);
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 9998;
+        transition: transform 0.35s ease;
+        mix-blend-mode: difference;
+      }
     }
-    .cursor-ring {
-      position: fixed;
-      width: 36px; height: 36px;
-      border: 1.5px solid var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9998;
-      transition: transform 0.35s ease, border-color 0.2s;
-      mix-blend-mode: difference;
+
+    @media (max-width: 1024px) {
+      .cursor, .cursor-ring { display: none; }
+      body { cursor: auto; }
+      a, button { cursor: pointer !important; }
     }
 
     /* Nav */
@@ -95,7 +105,7 @@
       transition: color 0.25s;
       text-transform: uppercase;
     }
-    .nav-links a:hover { color: var(--accent); }
+    .nav-links a:hover, .nav-links a.active { color: var(--accent); }
 
     .nav-cta {
       font-family: 'DM Mono', monospace;
@@ -106,7 +116,6 @@
       background: var(--accent);
       padding: 0.55rem 1.4rem;
       border: none;
-      cursor: none;
       text-decoration: none;
       font-weight: 500;
       transition: background 0.2s, transform 0.2s;
@@ -195,8 +204,7 @@
       text-transform: uppercase;
       transition: border-color 0.2s, color 0.2s;
     }
-    .tag:hover { border-color: var(--accent); color: var(--accent); }
-    .tag.active { border-color: var(--accent); color: var(--accent); }
+    .tag:hover, .tag.active { border-color: var(--accent); color: var(--accent); }
 
     .hero-cta-row {
       display: flex;
@@ -206,36 +214,29 @@
       animation: fadeUp 0.9s 1s forwards;
     }
 
-    .btn-primary {
+    .btn-primary, .btn-outline {
       font-family: 'DM Mono', monospace;
       font-size: 0.82rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--bg);
-      background: var(--accent);
       padding: 0.9rem 2.2rem;
       border: none;
-      cursor: none;
       text-decoration: none;
       font-weight: 500;
-      transition: background 0.2s, transform 0.2s;
+      transition: all 0.2s;
       display: inline-block;
+    }
+
+    .btn-primary {
+      color: var(--bg);
+      background: var(--accent);
     }
     .btn-primary:hover { background: var(--accent2); transform: translateY(-3px); }
 
     .btn-outline {
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
       color: var(--text);
       background: transparent;
-      padding: 0.9rem 2.2rem;
       border: 1px solid var(--border);
-      cursor: none;
-      text-decoration: none;
-      transition: border-color 0.2s, color 0.2s, transform 0.2s;
-      display: inline-block;
     }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
 
@@ -271,7 +272,7 @@
       50% { opacity: 1; transform: scaleY(0.6); }
     }
 
-    /* Section base */
+    /* Sections */
     section {
       padding: 7rem 4rem;
       position: relative;
@@ -302,9 +303,7 @@
     }
 
     /* About */
-    #about {
-      background: var(--bg2);
-    }
+    #about { background: var(--bg2); }
 
     .about-grid {
       display: grid;
@@ -396,9 +395,10 @@
       content: '▸';
       color: var(--accent);
       font-size: 0.7rem;
+      flex-shrink: 0;
     }
 
-    /* Why QA Matters */
+    /* Why QA */
     #why-qa {
       background: var(--bg);
       overflow: hidden;
@@ -424,7 +424,6 @@
       background: var(--bg2);
       padding: 2.5rem 2rem;
       transition: background 0.25s;
-      position: relative;
     }
     .qa-card:hover { background: var(--bg3); }
 
@@ -464,9 +463,7 @@
     }
 
     /* Skills */
-    #skills {
-      background: var(--bg2);
-    }
+    #skills { background: var(--bg2); }
 
     .skills-grid {
       display: grid;
@@ -555,9 +552,7 @@
     .tech-tag:hover { border-color: var(--teal); color: var(--teal); }
 
     /* Automation Guide */
-    #automation {
-      background: var(--bg);
-    }
+    #automation { background: var(--bg); }
 
     .automation-intro {
       max-width: 650px;
@@ -600,6 +595,7 @@
       color: var(--bg);
       background: var(--accent);
       width: 56px; height: 56px;
+      min-width: 56px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -609,7 +605,10 @@
       z-index: 1;
     }
 
-    .pipe-content { flex: 1; }
+    .pipe-content {
+      flex: 1;
+      min-width: 0;
+    }
 
     .pipe-title {
       font-family: 'Syne', sans-serif;
@@ -641,7 +640,6 @@
       letter-spacing: 0.08em;
     }
 
-    /* Code snippet */
     .code-block {
       background: #0a0a0a;
       border: 1px solid var(--border);
@@ -649,10 +647,11 @@
       padding: 1.5rem;
       margin-top: 1rem;
       font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #aaa;
       line-height: 1.8;
       overflow-x: auto;
+      word-wrap: break-word;
     }
 
     .code-block .kw { color: var(--accent); }
@@ -662,9 +661,7 @@
     .code-block .typ { color: #ff8c69; }
 
     /* Projects */
-    #projects {
-      background: var(--bg2);
-    }
+    #projects { background: var(--bg2); }
 
     .projects-grid {
       display: grid;
@@ -678,7 +675,6 @@
       padding: 0;
       overflow: hidden;
       transition: border-color 0.25s, transform 0.25s;
-      cursor: none;
     }
     .project-card:hover {
       border-color: var(--accent);
@@ -813,6 +809,7 @@
       font-family: 'DM Mono', monospace;
       font-size: 0.78rem;
       color: var(--muted);
+      word-break: break-word;
     }
 
     .contact-info-label {
@@ -826,6 +823,7 @@
 
     .social-row {
       display: flex;
+      flex-wrap: wrap;
       gap: 0.8rem;
       margin-top: 2.5rem;
     }
@@ -881,6 +879,7 @@
       transition: border-color 0.2s;
       appearance: none;
       resize: none;
+      width: 100%;
     }
     .form-input:focus, .form-textarea:focus, .form-select:focus {
       border-color: var(--accent);
@@ -896,7 +895,6 @@
       background: var(--accent);
       border: none;
       padding: 1rem 2.5rem;
-      cursor: none;
       font-weight: 500;
       align-self: flex-start;
       transition: background 0.2s, transform 0.2s;
@@ -959,19 +957,262 @@
     ::-webkit-scrollbar-thumb { background: var(--border); }
     ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
 
-    /* Mobile */
-    @media (max-width: 768px) {
-      nav { padding: 1rem 1.5rem; }
-      .nav-links { display: none; }
-      section { padding: 5rem 1.5rem; }
-      #hero { padding: 0 1.5rem; }
-      .about-grid, .contact-grid, .projects-grid, .skills-grid, .qa-cards { grid-template-columns: 1fr; }
-      .form-row { grid-template-columns: 1fr; }
-      footer { flex-direction: column; gap: 1rem; text-align: center; }
+    /* ============================================
+       RESPONSIVE MEDIA QUERIES
+       ============================================ */
+
+    /* Tablet - 768px to 1024px */
+    @media (max-width: 1024px) {
+      nav {
+        padding: 1.2rem 2.5rem;
+      }
+      
+      .nav-links {
+        gap: 1.8rem;
+      }
+      
+      .nav-links a {
+        font-size: 0.72rem;
+      }
+      
+      section {
+        padding: 5rem 2.5rem;
+      }
+      
+      #hero {
+        padding: 0 2.5rem;
+        min-height: 90vh;
+      }
+      
+      .about-grid, .contact-grid, .skills-grid {
+        gap: 3rem;
+      }
+      
+      .qa-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .pipe-step {
+        gap: 1.5rem;
+      }
+      
+      .code-block {
+        font-size: 0.7rem;
+        padding: 1.2rem;
+      }
     }
 
-    /* Active nav highlight */
-    nav a.active { color: var(--accent); }
+    /* Mobile Large - 481px to 767px */
+    @media (max-width: 767px) {
+      nav {
+        padding: 1rem 1.5rem;
+      }
+      
+      .nav-links {
+        display: none;
+      }
+      
+      .nav-cta {
+        font-size: 0.7rem;
+        padding: 0.5rem 1rem;
+      }
+      
+      section {
+        padding: 4rem 1.5rem;
+      }
+      
+      #hero {
+        padding: 0 1.5rem;
+        min-height: 85vh;
+      }
+      
+      .hero-name {
+        font-size: clamp(2.5rem, 10vw, 4rem);
+      }
+      
+      .hero-subtitle {
+        max-width: 100%;
+      }
+      
+      .hero-cta-row {
+        flex-direction: column;
+        gap: 0.8rem;
+        width: 100%;
+      }
+      
+      .btn-primary, .btn-outline {
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+      }
+      
+      .hero-scroll {
+        display: none;
+      }
+      
+      .about-grid,
+      .contact-grid,
+      .projects-grid,
+      .skills-grid,
+      .qa-cards {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+      
+      .form-submit {
+        width: 100%;
+      }
+      
+      .pipe-step {
+        gap: 1rem;
+      }
+      
+      .pipe-num {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        font-size: 0.7rem;
+      }
+      
+      .pipeline::before {
+        left: 22px;
+      }
+      
+      .pipe-title {
+        font-size: 1rem;
+      }
+      
+      .pipe-desc {
+        font-size: 0.75rem;
+      }
+      
+      .code-block {
+        font-size: 0.65rem;
+        padding: 1rem;
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+      }
+      
+      .about-stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+      }
+      
+      .stat-num {
+        font-size: 2rem;
+      }
+      
+      footer {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 2rem 1.5rem;
+      }
+      
+      .social-row {
+        justify-content: center;
+      }
+    }
+
+    /* Mobile Small - 320px to 480px */
+    @media (max-width: 480px) {
+      .section-title {
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+      }
+      
+      .hero-name {
+        font-size: clamp(2rem, 12vw, 3rem);
+      }
+      
+      .hero-tags {
+        gap: 0.5rem;
+      }
+      
+      .tag {
+        font-size: 0.65rem;
+        padding: 0.3rem 0.7rem;
+      }
+      
+      .about-stats {
+        grid-template-columns: 1fr;
+      }
+      
+      .qa-card {
+        padding: 2rem 1.5rem;
+      }
+      
+      .project-card-header,
+      .project-body {
+        padding: 1.5rem;
+      }
+      
+      .code-block {
+        font-size: 0.6rem;
+      }
+      
+      .pipe-desc {
+        font-size: 0.72rem;
+      }
+    }
+
+    /* Landscape phones */
+    @media (max-height: 600px) and (orientation: landscape) {
+      #hero {
+        min-height: auto;
+        padding: 8rem 1.5rem 4rem;
+      }
+      
+      .hero-scroll {
+        display: none;
+      }
+    }
+
+    /* Large Desktop - 1440px+ */
+    @media (min-width: 1440px) {
+      section {
+        padding: 8rem 6rem;
+      }
+      
+      #hero {
+        padding: 0 6rem;
+      }
+      
+      nav {
+        padding: 1.6rem 6rem;
+      }
+      
+      .about-grid,
+      .contact-grid {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+    }
+
+    /* Print Styles */
+    @media print {
+      .cursor,
+      .cursor-ring,
+      nav,
+      .hero-scroll,
+      .form-submit,
+      .social-row,
+      footer {
+        display: none !important;
+      }
+      
+      body {
+        background: white;
+        color: black;
+      }
+      
+      section {
+        page-break-inside: avoid;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1034,7 +1275,7 @@
         <p>
           I'm <strong>Kanu Kennedy</strong>, a QA Engineer specializing in building robust,
           maintainable test frameworks that catch bugs before they reach production. My core strength
-          is in <strong>Java-based test automation</strong> using Playwright and JUnit for both UI and API testing. I sit at the intersection of quality assurance and backend engineering, a combination that gives me a uniquely holistic view of the entire development lifecycle.
+          is in <strong>Java-based test automation</strong> using Playwright and JUnit for both UI and API testing.
         </p>
         <p>
           My journey started with a curiosity about <strong>why software breaks</strong>. That curiosity
@@ -1049,7 +1290,7 @@
 
         <div class="about-stats">
           <div class="stat-box">
-            <div class="stat-num">40+</div>
+            <div class="stat-num">55+</div>
             <div class="stat-label">Test Suites Written</div>
           </div>
           <div class="stat-box">
@@ -1433,13 +1674,13 @@
     <span class="kw">void</span> <span class="fn">userCanLoginSuccessfully</span>() {
         <span class="cmt">// Arrange</span>
         <span class="typ">LoginPage</span> loginPage = <span class="kw">new</span> <span class="typ">LoginPage</span>(page);
-        page.<span class="fn">navigate</span>(<span class="str">"https://payassyst.aetdevops.com/"</span>);
+        page.<span class="fn">navigate</span>(<span class="str">"https://app.example.com/"</span>);
 
         <span class="cmt">// Act</span>
-        loginPage.<span class="fn">login</span>(<span class="str">"supplier@yopmail.com"</span>, <span class="str">"password@123"</span>);
+        loginPage.<span class="fn">login</span>(<span class="str">"user@example.com"</span>, <span class="str">"password"</span>);
 
         <span class="cmt">// Assert</span>
-        <span class="fn">assertEquals</span>(<span class="str">"https://payassyst.aetdevops.com/"</span>, page.<span class="fn">url</span>());
+        <span class="fn">assertEquals</span>(<span class="str">"https://app.example.com/dashboard"</span>, page.<span class="fn">url</span>());
     }
 
     <span class="str">@AfterEach</span>
@@ -1471,14 +1712,14 @@
 <span class="str">@Test</span>
 <span class="kw">void</span> <span class="fn">getUserReturnsValidResponse</span>() {
     <span class="typ">Response</span> response = <span class="fn">given</span>()
-        .<span class="fn">header</span>(<span class="str">"Authorization"</span>, <span class="str">"Bearer token123"</span>)
+        .<span class="fn">header</span>(<span class="str">"Authorization"</span>, <span class="str">"Bearer token"</span>)
         .<span class="fn">when</span>()
-        .<span class="fn">get</span>(<span class="str">"https://payapi.aetdevops.com"</span>)
+        .<span class="fn">get</span>(<span class="str">"https://api.example.com/users/1"</span>)
         .<span class="fn">then</span>()
         .<span class="fn">statusCode</span>(200)
         .<span class="fn">extract</span>().<span class="fn">response</span>();
 
-    <span class="fn">assertEquals</span>(<span class="str">"Kanu Kennedy"</span>, response.<span class="fn">jsonPath</span>().<span class="fn">getString</span>(<span class="str">"name"</span>));
+    <span class="fn">assertEquals</span>(<span class="str">"John Doe"</span>, response.<span class="fn">jsonPath</span>().<span class="fn">getString</span>(<span class="str">"name"</span>));
 }
           </div>
           <div class="pipe-tools" style="margin-top:1rem;">
@@ -1515,7 +1756,7 @@
           <span class="kw">java-version:</span> <span class="str">'11'</span>
       
       - <span class="kw">name:</span> <span class="str">Install Playwright browsers</span>
-        <span class="kw">run:</span> <span class="str">mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps"</span>
+        <span class="kw">run:</span> <span class="str">mvn exec:java -D exec.mainClass=com.microsoft.playwright.CLI</span>
       
       - <span class="kw">name:</span> <span class="str">Run tests</span>
         <span class="kw">run:</span> <span class="str">mvn clean test</span>
@@ -1631,18 +1872,17 @@
         </div>
         <div class="project-body">
           <p class="project-type">Database Testing</p>
-          <h3 class="project-title">SQL Validation Suite</h3>
+          <h3 class="project-title">NoSQL Validation Suite</h3>
           <p class="project-desc">
-            Database testing framework that validates data integrity, CRUD operations, and SQL query
-            correctness. Uses JDBC to connect to PostgreSQL, runs assertions on query results, and
-            verifies foreign key constraints and triggers work as expected.
+            Database testing framework that validates data integrity, CRUD operations, and query
+            correctness. Uses MongoDB driver for Java to connect, runs assertions on query results,
+            and verifies data consistency across collections.
           </p>
           <div class="project-stack">
             <span class="stack-tag">Java</span>
             <span class="stack-tag">JUnit</span>
-            <span class="stack-tag">JDBC</span>
-            <span class="stack-tag">PostgreSQL</span>
-            <span class="stack-tag">SQL</span>
+            <span class="stack-tag">MongoDB</span>
+            <span class="stack-tag">NoSQL</span>
           </div>
         </div>
       </div>
@@ -1678,7 +1918,7 @@
           <div class="contact-icon">📍</div>
           <div class="contact-info-text">
             <span class="contact-info-label">Location</span>
-            Open to Remote / Hybrid
+            Open to Remote / Hybrid Roles
           </div>
         </div>
         <div class="contact-info-item">
@@ -1698,47 +1938,40 @@
 
       <div class="reveal">
         <form action="https://formsubmit.co/32707257cd80bf8e62691928f327eec5" method="POST" class="contact-form">
-        <!-- Honeypot for spam protection -->
-        <input type="text" name="_honey" style="display:none">
+          <input type="text" name="_honey" style="display:none">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_next" value="https://kennedykanu.netlify.app/thank-you.html">
+          <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission!">
 
-        <!-- Disable reCAPTCHA -->
-        <input type="hidden" name="_captcha" value="false">
-        
-        <!-- Custom success page -->
-        <input type="hidden" name="_next" value="https://kennedykanu.netlify.app/thank-you.html">
-        
-        <!-- Email subject line -->
-        <input type="hidden" name="_subject" value="New Portfolio Contact Form Submission!">
-
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input type="text" name="first_name" class="form-input" placeholder="John" required />
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name</label>
+              <input type="text" name="first_name" class="form-input" placeholder="John" required />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input type="text" name="last_name" class="form-input" placeholder="Doe" required />
+            </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input type="text" name="last_name" class="form-input" placeholder="Doe" required />
+            <label class="form-label">Email Address</label>
+            <input type="email" name="email" class="form-input" placeholder="john@company.com" required />
           </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input type="email" name="email" class="form-input" placeholder="john@company.com" required />
-        </div>
-        <div class="form-group">
-          <label class="form-label">Enquiry Type</label>
-          <select name="enquiry_type" class="form-select" required>
-            <option value="">Select an option</option>
-            <option>Full-time Role</option>
-            <option>Contract / Freelance</option>
-            <option>Collaboration</option>
-            <option>General Enquiry</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea name="message" class="form-textarea" placeholder="Tell me about your project or opportunity..." required></textarea>
-        </div>
-        <button type="submit" class="form-submit">Send Message →</button>
+          <div class="form-group">
+            <label class="form-label">Enquiry Type</label>
+            <select name="enquiry_type" class="form-select" required>
+              <option value="">Select an option</option>
+              <option>Full-time Role</option>
+              <option>Contract / Freelance</option>
+              <option>Collaboration</option>
+              <option>General Enquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea name="message" class="form-textarea" placeholder="Tell me about your project or opportunity..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Send Message →</button>
         </form>
       </div>
     </div>
@@ -1753,36 +1986,38 @@
   </footer>
 
   <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
+    // Custom cursor - Desktop only
+    if (window.innerWidth > 1024) {
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      let mx = 0, my = 0, rx = 0, ry = 0;
 
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX; my = e.clientY;
-      cursor.style.left = mx - 6 + 'px';
-      cursor.style.top = my - 6 + 'px';
-    });
+      document.addEventListener('mousemove', e => {
+        mx = e.clientX; my = e.clientY;
+        cursor.style.left = mx - 6 + 'px';
+        cursor.style.top = my - 6 + 'px';
+      });
 
-    function animRing() {
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.left = rx - 18 + 'px';
-      ring.style.top = ry - 18 + 'px';
-      requestAnimationFrame(animRing);
+      function animRing() {
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.left = rx - 18 + 'px';
+        ring.style.top = ry - 18 + 'px';
+        requestAnimationFrame(animRing);
+      }
+      animRing();
+
+      document.querySelectorAll('a, button, .project-card, .qa-card, .skill-category').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          cursor.style.transform = 'scale(2.5)';
+          ring.style.transform = 'scale(1.5)';
+        });
+        el.addEventListener('mouseleave', () => {
+          cursor.style.transform = 'scale(1)';
+          ring.style.transform = 'scale(1)';
+        });
+      });
     }
-    animRing();
-
-    document.querySelectorAll('a, button, .project-card, .qa-card, .skill-category').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform = 'scale(2.5)';
-        ring.style.transform = 'scale(1.5)';
-      });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform = 'scale(1)';
-        ring.style.transform = 'scale(1)';
-      });
-    });
 
     // Scroll reveal
     const reveals = document.querySelectorAll('.reveal');
